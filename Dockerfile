@@ -18,6 +18,9 @@ RUN apt-get update && apt-get install -y software-properties-common && \
     php7.4-zip \
     unzip
 
+RUN apt-get install -y --no-install-recommends \
+        php7.4-xml
+
 # Baixa o pacote do Moodle
 RUN apt-get install -y wget \
     && wget https://download.moodle.org/download.php/direct/stable311/moodle-latest-311.tgz \
@@ -37,7 +40,7 @@ COPY moodle.conf /etc/apache2/sites-available/moodle.conf
 RUN ln -s /etc/apache2/sites-available/moodle.conf /etc/apache2/sites-enabled/moodle.conf
 RUN rm /etc/apache2/sites-enabled/000-default.conf
 
-RUN sed -i '/<Directory \/var\/www\/html>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+#RUN sed -i '/<Directory \/var\/www\/html>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
 
 # Expor a porta 80 do Apache
